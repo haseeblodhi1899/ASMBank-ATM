@@ -39,19 +39,30 @@ The DLL is 32-bit (x86), so Python has to be 32-bit too. A process can only load
    cd ASMBank-ATM\Python
    ```
 
-3. Install 32-bit Python 3.12 (one time):
-   
+3. Install Python and all packages with one command:
+
    ```powershell
-   uv python install cpython-3.12-windows-x86-none
+   uv sync
    ```
-   
-   If uv rejects the name, run `uv python list`, find a line with `windows-x86` and use that name.
+
+   This reads `.python-version` and `uv.lock`, downloads 32-bit Python 3.12 if you do not have it, creates a `.venv` folder and installs the packages.
 
 4. Check that Python is 32-bit (it must print `32`):
-   
+
    ```powershell
    uv run python -c "import struct; print(struct.calcsize('P')*8)"
    ```
+
+What `uv sync` installs:
+
+| Item | Version | Why |
+|---|---|---|
+| Python (32-bit) | 3.12 | must match the 32-bit DLL |
+| customtkinter | 6.0.0 | the GUI |
+| darkdetect | 0.8.0 | needed by customtkinter |
+| packaging | 26.3 | needed by customtkinter |
+
+Everything else the code uses (`tkinter`, `ctypes`, `csv`) comes with Python. uv, Git and Visual Studio are not installed by `uv sync`.
 
 ## Run
 
@@ -223,6 +234,7 @@ Rows that fail the assembly checks are skipped and the original file is copied t
 | Output goes to `x64\Debug`                | Switch the platform to x86 and rebuild                                                      |
 | `ModuleNotFoundError: customtkinter`      | Use `uv run app.py` (run `uv sync` once)                                                    |
 | "users.csv could not be saved"            | Close it if it is open in Excel                                                             |
+| uv cannot find 32-bit Python              | Run `uv python install cpython-3.12-windows-x86-none`, or find the right name with `uv python list` |
 
 ## Limitations
 
@@ -232,5 +244,3 @@ Rows that fail the assembly checks are skipped and the original file is copied t
 - Maximum 50 accounts
 - The PIN hash (djb2) is simple and not secure enough for a real bank
 - No cents, only whole rupees
-
-
