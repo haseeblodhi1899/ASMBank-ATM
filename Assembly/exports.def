@@ -1,0 +1,18 @@
+; exports.def - module definition file for Assembly.dll
+; stdcall symbols are normally decorated (_SignUp@8); listing the plain names here
+; exports them undecorated, so Python can call asm.SignUp, asm.Login, ...
+; Only names that exist as PROCs in main.asm may be listed.
+; After editing: Rebuild Solution.
+LIBRARY Assembly
+EXPORTS
+    SignUp
+    Login
+    Logout
+    Deposit
+    Withdraw
+    GetBalance
+    AttemptsLeft
+    GetRule
+    GetUserCount
+    ExportUser
+    ImportUser
