@@ -1,0 +1,21 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# runtime data (test accounts)
+Python/users.csv
+Python/users.csv.tmp
+Python/users.csv.bak
+
+# Visual Studio
+.vs/
+*.user
+Assembly/Assembly/
+
+# build output (keep only the DLL)
+Assembly/Debug/*
+!Assembly/Debug/Assembly.dll
+
+# not part of the project
+structure.txt
